@@ -93,8 +93,6 @@ try:
 
 finally:
     driver.quit()
-
-#     # Optional: Remove the downloaded file after reading
-#     if html_file and os.path.exists(html_file):
-#         os.remove(html_file)
-#         print(f"Deleted: {html_file}")
+    if html_file and os.path.exists(html_file):
+        os.remove(html_file)
+        print(f"Deleted: {html_file}")
