@@ -1,0 +1,72 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# Mac OS
+.DS_Store
+
+# PyCharm settings
+.idea/
+
+# dotenv environment variables
+.env
+
+# log files
+*.log
+
+# Compiled C files
+*.so
+
+# Test coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Pipenv
+Pipfile.lock
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pyre
+.pyre/
+
+# Poetry
+poetry.lock
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# Railway specific
+railway/
+
+# Temporary files
+*.tmp
+*.temp
