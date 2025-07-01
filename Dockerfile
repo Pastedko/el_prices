@@ -11,4 +11,7 @@ COPY . /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN echo "Listing contents of /app:" && ls -al /app
+RUN echo "Showing main.py:" && cat /app/main.py || echo "main.py not found"
+
 CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "python", "main.py"]
