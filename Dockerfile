@@ -1,32 +1,31 @@
 FROM python:3.11-slim
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && \
-    apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 libxss1 libappindicator3-1 libasound2 && \
+    apt-get install -y wget unzip curl gnupg && \
     rm -rf /var/lib/apt/lists/*
 
-# Download Chrome
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+# Install Google Chrome
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
     apt-get update && \
-    apt-get install -y ./google-chrome-stable_current_amd64.deb && \
-    rm google-chrome-stable_current_amd64.deb
+    apt-get install -y google-chrome-stable && \
+    rm -rf /var/lib/apt/lists/*
 
-# Download ChromeDriver
+# Install ChromeDriver matching Chrome version
 RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1) && \
     DRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}") && \
     wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip" && \
     unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
     rm /tmp/chromedriver.zip
 
-# Set display port for Xvfb
-ENV DISPLAY=:99
-
-# Install Python dependencies
+# Install python packages
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your app code
-COPY . .
+# Add your app
+COPY . /app
+WORKDIR /app
 
-# Entry point
-CMD ["xvfb-run", "--server-args='-screen 0 1920x1080x24'", "python", "main.py"]
+# CMD
+CMD ["python", "your_script.py"]
