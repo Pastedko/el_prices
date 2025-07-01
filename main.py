@@ -9,6 +9,10 @@ from selenium.webdriver.chrome.service import Service
 import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
+import sys
+sys.stdout.reconfigure(line_buffering=True)
+print("start script")
+
 
 def send_email(subject, body):
     load_dotenv()

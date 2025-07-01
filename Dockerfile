@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "python", "main.py"]
+CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "python", "-u", "main.py"]
