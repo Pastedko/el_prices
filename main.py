@@ -26,6 +26,7 @@ def send_email(subject, body):
         server.sendmail(EMAIL_ADDRESS, RECEIVER_EMAIL, msg.as_string())
 
 def main():
+    print("Starting the script...")
     # Set your download directory
     download_dir = os.path.abspath("downloads")
     os.makedirs(download_dir, exist_ok=True)
@@ -52,6 +53,7 @@ def main():
 
     try:
         # Step 1: Open the website
+        print("Opening the website...")
         driver.get("https://ibex.bg/данни-за-пазара/пазарен-сегмент-ден-напред/day-ahead-prices-and-volumes-v2-0/")
 
         # Step 2: Find and click the download button
