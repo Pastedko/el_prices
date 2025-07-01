@@ -6,9 +6,9 @@ RUN apt-get update && \
 
 ENV DISPLAY=:99
 
-COPY requirements.txt .
+WORKDIR /app
+COPY . /app
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-
-CMD ["python", "-u", "-c", "print('hello railway')"]
+CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "python", "main.py"]
