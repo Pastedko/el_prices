@@ -42,6 +42,10 @@ chrome_options.add_experimental_option("prefs", {
 #chrome_options.add_argument("--headless")  # Uncomment if you want headless
 
 # Initialize driver
+chrome_options.binary_location = "/usr/bin/chromium"
+chrome_options.add_argument("--headless")  # Always headless in CI
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
 driver = webdriver.Chrome(options=chrome_options)
 
 try:
