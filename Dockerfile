@@ -1,17 +1,31 @@
 FROM python:3.11-slim
 
+# Install system dependencies
 RUN apt-get update && \
-    apt-get install -y wget unzip chromium chromium-driver xvfb libxi6 libgconf-2-4 libnss3 libxss1 libappindicator3-1 libasound2 && \
+    apt-get install -y wget unzip gnupg2 \
+    # Install Chromium and Chromedriver dependencies
+    fonts-liberation libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2 \
+    libgbm-dev libxshmfence-dev libxrandr2 libxss1 libxcursor1 \
+    libxi6 libatk1.0-0 libxcomposite1 libxdamage1 libxext6 \
+    chromium chromium-driver && \
     rm -rf /var/lib/apt/lists/*
 
-ENV DISPLAY=:99
+# Set environment variable for Chrome/Chromium
+ENV CHROME_BIN=chromium
+ENV CHROMEDRIVER_BIN=chromium-driver
 
+# Set up working directory
 WORKDIR /app
-COPY . /app
 
+# Copy requirements (if any) and install Python dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN echo "Listing contents of /app:" && ls -al /app
-RUN echo "Showing main.py:" && cat /app/main.py || echo "main.py not found"
+# Copy your script and .env
+COPY . .
 
-CMD ["xvfb-run", "--server-args=-screen 0 1920x1080x24", "python", "main.py"]
+# Make downloads folder
+RUN mkdir -p downloads
+
+# Run the script
+CMD ["python", "main.py"]
