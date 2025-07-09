@@ -39,6 +39,13 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--disable-setuid-sandbox")
 chrome_options.add_argument("--window-size=1920,1080")
+prefs = {
+    "download.default_directory": download_dir,
+    "download.prompt_for_download": False,
+    "download.directory_upgrade": True,
+    "safebrowsing.enabled": True
+}
+chrome_options.add_experimental_option("prefs", prefs)
 chrome_options.binary_location = "/usr/bin/chromium"
 
 service = Service("/usr/bin/chromedriver")
@@ -66,7 +73,8 @@ try:
     # Find and click the download XLS button
     button_xpath = "//button[contains(translate(text(), 'xls', 'XLS'), 'XLS')]"
     download_button = driver.find_element(By.XPATH, button_xpath)
-    download_button.click()
+    driver.execute_script("arguments[0].click();", download_button)
+
 
     # Wait for download to complete
     timeout = 60
