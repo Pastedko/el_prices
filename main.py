@@ -99,7 +99,8 @@ try:
     df = tables[2]  # third table on the page
 
     even_index_dict = {i: val for i, val in enumerate(df[df.columns[-1]][::2])}
-    body = f"Ceni na toka za utre:\n{even_index_dict}"
+    lines = [f"{i}: {val}" for i, val in even_index_dict.items()]
+    body = "Ceni na toka za utre:\n" + "\n".join(lines)
     send_email(
         subject="Electricity prices for tomorrow",
         body=body,
